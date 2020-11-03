@@ -20,6 +20,7 @@ import com.cruckman900.mymarvelcomiccollection.viewmodel.ComicAdapter
 import com.cruckman900.mymarvelcomiccollection.viewmodel.MMCCViewModel
 import com.cruckman900.mymarvelcomiccollection.viewmodel.MMCCViewModelProvider
 import kotlinx.android.synthetic.main.fragment_recyclerview.view.*
+import java.lang.Exception
 import javax.inject.Inject
 
 private const val TAG = "NewReleasesFragment"
@@ -51,38 +52,42 @@ class NewReleasesFragment: Fragment() {
 
         mmccViewModel = mmccProvider.create(MMCCViewModel::class.java)
 
-        mmccViewModel.getMutableLiveData().observe(this, object : Observer<AppState> {
-            override fun onChanged(t: AppState?) {
-                Log.d(TAG, "onChanged: hmmm3 ${t.toString()}")
-                t?.let {
-                    when (t) {
-                        is AppState.COMICRESPONSE -> {
-                            Log.d(TAG, "onChanged: comicresponse")
-                            val attributionText = t.comicResponse.attributionText
-                            Helper.attributionText = attributionText
+        try {
+            mmccViewModel.getMutableLiveData().observe(this, object : Observer<AppState> {
+                override fun onChanged(t: AppState?) {
+                    Log.d(TAG, "onChanged: hmmm3 ${t.toString()}")
+                    t?.let {
+                        when (t) {
+                            is AppState.COMICRESPONSE -> {
+                                Log.d(TAG, "onChanged: comicresponse")
+                                val attributionText = t.comicResponse.attributionText
+                                Helper.attributionText = attributionText
 
-                            val data = t.comicResponse.data
-                            val results = data.results
+                                val data = t.comicResponse.data
+                                val results = data.results
 
-                            inflateRecyclerView(results, view)
-                        }
-                        else -> {
-                            Log.d(TAG, "onChanged: not comicresponse")
+                                inflateRecyclerView(results, view)
+                            }
+                            else -> {
+                                Log.d(TAG, "onChanged: not comicresponse")
+                            }
                         }
                     }
                 }
-            }
+            })
+        } catch (e: Exception) {
+            Log.e(TAG, "onCreateView: ${e.message}")
+        }
 
-        })
-        Log.d(TAG, "onCreateView: hmmm")
+        Log.d(TAG, "onCreateView: hmmm ${Helper.getDateRangeString()}")
         mmccViewModel.getNewReleases(Helper.getDateRangeString())
-        Log.d(TAG, "onCreateView: hmmm2")
         return view
     }
 
     private fun inflateRecyclerView(dataSet: List<Results>, view: View) {
-        Log.d(TAG, "inflateRecyclerView: am I getting here?")
+        Log.d(TAG, "inflateRecyclerView: am I getting here? dataSet")
         val linearLayoutManager = LinearLayoutManager(activity)
+        linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
 
         view.recyclerview.layoutManager = linearLayoutManager
         view.recyclerview.adapter = ComicAdapter(dataSet)

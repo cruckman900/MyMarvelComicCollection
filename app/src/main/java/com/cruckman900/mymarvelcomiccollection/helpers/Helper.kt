@@ -2,8 +2,10 @@ package com.cruckman900.mymarvelcomiccollection.helpers
 
 import android.app.Application
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import java.security.MessageDigest
+import java.time.Duration
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneOffset
@@ -13,7 +15,6 @@ class Helper: Application() {
     companion object {
         lateinit var attributionText: String
 
-        @RequiresApi(Build.VERSION_CODES.O)
         fun getDateRangeString() : String {
             val current = LocalDateTime.now()
             val prev = current.minusWeeks(1)
@@ -30,7 +31,6 @@ class Helper: Application() {
             attributionText = attribText
         }
 
-        @RequiresApi(Build.VERSION_CODES.O)
         fun getTimeStamp() : String {
             return DateTimeFormatter
                     .ofPattern("yyyy-MM-ddHH:mm:ss.SSSSSS")

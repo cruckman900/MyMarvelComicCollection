@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.cruckman900.mymarvelcomiccollection.R
-import com.cruckman900.mymarvelcomiccollection.model.ComicResponse
 import com.cruckman900.mymarvelcomiccollection.model.Results
 import kotlinx.android.synthetic.main.api_item_layout.view.*
 
@@ -21,6 +20,7 @@ class ComicAdapter(val dataSet: List<Results>) :
             Log.d(TAG, "onBind: what's going on? ${dataItem.thumbnail.path}.${dataItem.thumbnail.extension}")
             Glide.with(comicView.context).load("${dataItem.thumbnail.path}.${dataItem.thumbnail.extension}")
                     .into(comicView.iv_thumbnail)
+            comicView.tv_title.textView.text = dataItem.title
         }
     }
 
@@ -35,6 +35,7 @@ class ComicAdapter(val dataSet: List<Results>) :
     }
 
     override fun getItemCount(): Int {
+        Log.d(TAG, "getItemCount: ${dataSet.size}")
         return dataSet.size
     }
 }

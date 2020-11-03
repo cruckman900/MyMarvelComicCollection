@@ -13,7 +13,7 @@ interface MMCCApi {
         @Query("hash") hash: String,
         @Query("ts") ts: String,
         @Query("dateRange") dateRange: String,
-        @Query("limit") limit: Int = 50,
+        @Query("limit") limit: Int = 99,
         @Query("noVariants") noVariants: Boolean = true,
         @Query("apikey") apiKey: String = "f83c91588c917f5891341f1bd722d5ac"
     ) : Call<ComicResponse>

@@ -12,7 +12,6 @@ import retrofit2.Response
 private const val TAG = "MMCCRepository"
 
 class MMCCRepository(val api: MMCCApi) {
-    @RequiresApi(Build.VERSION_CODES.O)
     fun repoGetNewReleases(
             callback: (data: AppState) -> Unit,
             dateRange: String) {
