@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/new_releases" app:showAsAction="never" android:icon="@drawable/ic_baseline_new_releases_24" android:title="@string/new_releases" />
+    <item android:id="@+id/search" app:showAsAction="never" android:icon="@drawable/ic_baseline_search_24" android:title="@string/search" />
+    <item android:id="@+id/search_by_photo" app:showAsAction="never" android:icon="@drawable/ic_baseline_camera_enhance_24" android:title="@string/search_by_photo" />
+    <item android:id="@+id/my_collection" app:showAsAction="always" android:icon="@drawable/ic_baseline_collections_24" android:title="@string/my_collection" />
+    <item android:id="@+id/wish_list" app:showAsAction="always" android:icon="@drawable/ic_baseline_favorite_24" android:title="@string/wish_list" />
+</menu>

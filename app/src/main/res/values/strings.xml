@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">My Marvel Comic Collection</string>
+    <string name="new_releases">New Releases</string>
+    <string name="my_collection">My Collection</string>
+    <string name="wish_list">Wish List</string>
+    <string name="search">Search</string>
+    <string name="search_by_photo">Search By Photo</string>
+    <string name="mmcc">MMCC</string>
+</resources>
