@@ -21,8 +21,15 @@ data class Results (
     val issueNumber: Double,
     @Json(name = "description")
     val description: String,
+    @Json(name = "dates")
+    val dates: List<Dates>,
     @Json(name = "thumbnail")
     val thumbnail: Thumbnail
+)
+
+data class Dates (
+    @Json(name = "date")
+    val date: String
 )
 
 data class Thumbnail (

@@ -1,8 +1,8 @@
 package com.cruckman900.mymarvelcomiccollection.model
 
-import android.os.Build
+import android.content.Context
 import android.util.Log
-import androidx.annotation.RequiresApi
+import com.cruckman900.mymarvelcomiccollection.MainActivity
 import com.cruckman900.mymarvelcomiccollection.helpers.Helper
 import com.cruckman900.mymarvelcomiccollection.viewmodel.AppState
 import retrofit2.Call
@@ -57,8 +57,8 @@ class MMCCRepository(val api: MMCCApi) {
         api.getComicByCoverDetail(title, startYear, issueNumber)
                 .enqueue(object : Callback<ComicResponse> {
                     override fun onResponse(
-                            call: Call<ComicResponse>,
-                            response: Response<ComicResponse>
+                        call: Call<ComicResponse>,
+                        response: Response<ComicResponse>
                     ) {
                         if (response.isSuccessful) {
                             response.body()?.let {
@@ -179,5 +179,18 @@ class MMCCRepository(val api: MMCCApi) {
                     }
 
                 })
+    }
+
+    fun repoGetCollection(
+        callback: (data: AppState) -> Unit,
+        context: Context
+    ) {
+        val thread = Thread() {
+            var db = MMCCDB.createInstance(context)
+
+            val appState = AppState.COLLECTIONRESPONSE(db.collectionDao().getCollection())
+            callback.invoke(appState)
+        }
+        thread.start()
     }
 }

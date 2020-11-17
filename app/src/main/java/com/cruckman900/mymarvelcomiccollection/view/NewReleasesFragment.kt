@@ -1,16 +1,19 @@
 package com.cruckman900.mymarvelcomiccollection.view
 
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cruckman900.mymarvelcomiccollection.MMCCApplication
+import com.cruckman900.mymarvelcomiccollection.MainActivity
 import com.cruckman900.mymarvelcomiccollection.R
 import com.cruckman900.mymarvelcomiccollection.helpers.Helper
 import com.cruckman900.mymarvelcomiccollection.model.ComicResponse
@@ -26,6 +29,14 @@ import javax.inject.Inject
 private const val TAG = "NewReleasesFragment"
 
 class NewReleasesFragment: Fragment() {
+    lateinit var collectionListener: (data: Results) -> Unit
+    lateinit var wishlistListener: (data: Results) -> Unit
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        collectionListener = (context as MainActivity)::addToCollection
+        wishlistListener = (context)::addToWishlist
+    }
+
     companion object {
         fun createNewReleases() : NewReleasesFragment {
             return NewReleasesFragment()
@@ -70,6 +81,7 @@ class NewReleasesFragment: Fragment() {
                             }
                             else -> {
                                 Log.d(TAG, "onChanged: not comicresponse")
+                                Toast.makeText(activity, t.toString(), Toast.LENGTH_SHORT).show()
                             }
                         }
                     }
@@ -90,6 +102,6 @@ class NewReleasesFragment: Fragment() {
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
 
         view.recyclerview.layoutManager = linearLayoutManager
-        view.recyclerview.adapter = ComicAdapter(dataSet)
+        view.recyclerview.adapter = ComicAdapter(dataSet, collectionListener, wishlistListener)
     }
 }

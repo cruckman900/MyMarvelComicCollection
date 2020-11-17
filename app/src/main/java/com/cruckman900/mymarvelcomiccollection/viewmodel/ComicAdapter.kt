@@ -12,15 +12,36 @@ import kotlinx.android.synthetic.main.api_item_layout.view.*
 
 private const val TAG = "ComicAdapter"
 
-class ComicAdapter(val dataSet: List<Results>) :
-        RecyclerView.Adapter<ComicAdapter.ComicViewHolder>() {
+class ComicAdapter(
+    val dataSet: List<Results>,
+    val collectionListener: (dataItem: Results) -> Unit,
+    val wishlistListener: (dataItem: Results) -> Unit
+) : RecyclerView.Adapter<ComicAdapter.ComicViewHolder>() {
 
     class ComicViewHolder(val comicView: View): RecyclerView.ViewHolder(comicView) {
-        fun onBind(dataItem: Results) {
+        fun onBind(
+            dataItem: Results,
+            collectionListener: (dataItem: Results) -> Unit,
+            wishlistListener: (dataItem: Results) -> Unit
+        ) {
             Log.d(TAG, "onBind: what's going on? ${dataItem.thumbnail.path}.${dataItem.thumbnail.extension}")
             Glide.with(comicView.context).load("${dataItem.thumbnail.path}.${dataItem.thumbnail.extension}")
                     .into(comicView.iv_thumbnail)
-            comicView.tv_title.textView.text = dataItem.title
+            comicView.tv_title.text = dataItem.title.split(" (")[0]
+            val issueNumber = when (dataItem.issueNumber.toInt()) {
+                0 -> ""
+                else -> "Issue #${dataItem.issueNumber.toInt().toString()}"
+            }
+            comicView.tv_year.text = dataItem.dates[0].date.split("-")[0]
+            comicView.tv_issue_number.text = issueNumber
+
+            comicView.btn_add_to_collection.setOnClickListener {
+                collectionListener.invoke(dataItem)
+            }
+
+            comicView.btn_add_to_wishlist.setOnClickListener {
+                wishlistListener.invoke(dataItem)
+            }
         }
     }
 
@@ -31,7 +52,7 @@ class ComicAdapter(val dataSet: List<Results>) :
     }
 
     override fun onBindViewHolder(holder: ComicViewHolder, position: Int) {
-        holder.onBind(dataSet[position])
+        holder.onBind(dataSet[position], collectionListener, wishlistListener)
     }
 
     override fun getItemCount(): Int {

@@ -1,11 +1,7 @@
 package com.cruckman900.mymarvelcomiccollection.helpers
 
 import android.app.Application
-import android.os.Build
-import android.util.Log
-import androidx.annotation.RequiresApi
 import java.security.MessageDigest
-import java.time.Duration
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneOffset

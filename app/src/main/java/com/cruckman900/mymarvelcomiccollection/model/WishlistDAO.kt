@@ -1,13 +1,10 @@
 package com.cruckman900.mymarvelcomiccollection.model
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface WishlistDAO {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveToWishlist(comic: WishlistEntity)
 
     @Query(value = "SELECT * FROM wishlist ORDER BY title, year, issueNumber")

@@ -16,7 +16,7 @@
         android:background="@color/marvel_orange">
 
         <ImageView
-            android:id="@+id/iv_thumbnail"
+            android:id="@+id/iv_db_thumbnail"
             android:layout_width="75dp"
             android:layout_height="100dp"
             android:layout_margin="4dp"
@@ -24,7 +24,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tv_title"
+            android:id="@+id/tv_db_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -38,11 +38,11 @@
             android:textStyle="bold"
             android:fontFamily="@font/acme"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/iv_thumbnail"
+            app:layout_constraintStart_toEndOf="@+id/iv_db_thumbnail"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tv_year"
+            android:id="@+id/tv_db_year"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -51,30 +51,8 @@
             android:textColor="@color/marvel_orange_dark"
             app:layout_constraintStart_toEndOf="@+id/iv_thumbnail" />
 
-        <ImageButton
-            android:id="@+id/btn_add_to_collection"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_add_to_wishlist"
-            android:background="@color/marvel_orange"
-            app:srcCompat="@drawable/ic_baseline_collections_24" />
-
-        <ImageButton
-            android:id="@+id/btn_add_to_wishlist"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:background="@color/marvel_orange"
-            app:srcCompat="@drawable/ic_baseline_favorite_24" />
-
         <TextView
-            android:id="@+id/tv_issue_number"
+            android:id="@+id/tv_db_issue_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"

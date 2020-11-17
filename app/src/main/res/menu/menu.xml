@@ -6,4 +6,5 @@
     <item android:id="@+id/search_by_photo" app:showAsAction="never" android:icon="@drawable/ic_baseline_camera_enhance_24" android:title="@string/search_by_photo" />
     <item android:id="@+id/my_collection" app:showAsAction="always" android:icon="@drawable/ic_baseline_collections_24" android:title="@string/my_collection" />
     <item android:id="@+id/wish_list" app:showAsAction="always" android:icon="@drawable/ic_baseline_favorite_24" android:title="@string/wish_list" />
+    <item android:id="@+id/clear_all_tables" app:showAsAction="never" android:title="Clear All Tables" />
 </menu>
