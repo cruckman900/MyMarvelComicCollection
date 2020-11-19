@@ -14,6 +14,6 @@ interface CollectionDAO {
     @Delete
     fun deleteEntry(comic: CollectionEntity)
 
-    @Query("DELETE from collection")
+    @Query("DELETE FROM collection")
     fun nukeCollection()
 }

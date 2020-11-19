@@ -12,4 +12,7 @@ interface WishlistDAO {
 
     @Delete
     fun deleteEntry(comic: WishlistEntity)
+
+    @Query("DELETE FROM wishlist")
+    fun nukeWishlist()
 }

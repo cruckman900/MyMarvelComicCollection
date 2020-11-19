@@ -34,7 +34,7 @@ class NewReleasesFragment: Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         collectionListener = (context as MainActivity)::addToCollection
-        wishlistListener = (context)::addToWishlist
+        wishlistListener = (context as MainActivity)::addToWishlist
     }
 
     companion object {

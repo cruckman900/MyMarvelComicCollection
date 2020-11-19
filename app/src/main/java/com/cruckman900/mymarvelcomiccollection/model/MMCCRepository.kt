@@ -193,4 +193,17 @@ class MMCCRepository(val api: MMCCApi) {
         }
         thread.start()
     }
+
+    fun repoGetWishlist(
+        callback: (data: AppState) -> Unit,
+        context: Context
+    ) {
+        val thread = Thread() {
+            var db = MMCCDB.createInstance(context)
+
+            val appState = AppState.WISHLISTRESPONSE(db.wishlistDao().getWishlist())
+            callback.invoke(appState)
+        }
+        thread.start()
+    }
 }

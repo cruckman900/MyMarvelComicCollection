@@ -2,14 +2,17 @@ package com.cruckman900.mymarvelcomiccollection
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Looper
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.cruckman900.mymarvelcomiccollection.helpers.Helper
 import com.cruckman900.mymarvelcomiccollection.model.*
 import com.cruckman900.mymarvelcomiccollection.view.CollectionFragment
 import com.cruckman900.mymarvelcomiccollection.view.NewReleasesFragment
+import com.cruckman900.mymarvelcomiccollection.view.WishlistFragment
 
 // https://gateway.marvel.com:443
 // Public Marvel API Key: f83c91588c917f5891341f1bd722d5ac
@@ -33,43 +36,47 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        lateinit var fragment: Fragment
+        lateinit var message: String
         when (item.itemId) {
             R.id.new_releases -> {
-                val fragment = NewReleasesFragment.createNewReleases()
+                fragment = NewReleasesFragment.createNewReleases()
 
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, fragment)
-                    .commit()
-
-                Toast.makeText(this, "New Releases", Toast.LENGTH_LONG).show()
+                message = "New Releases"
             }
             R.id.search -> {}
             R.id.search_by_photo -> {}
             R.id.my_collection -> {
-                val fragment = CollectionFragment.createCollectionFragment()
+                fragment = CollectionFragment.createCollectionFragment()
 
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, fragment)
-                    .commit()
-
-                Toast.makeText(this, "My Collection", Toast.LENGTH_LONG).show()
+                message = "My Collection"
             }
-            R.id.wish_list -> {}
+            R.id.wish_list -> {
+                fragment = WishlistFragment.createWishlistFragment()
+
+                message = "My Wishlist"
+            }
             R.id.clear_all_tables -> {
                 var db = MMCCDB.createInstance(this)
                 val thread = Thread() {
                     db.collectionDao().nukeCollection()
+                    db.wishlistDao().nukeWishlist()
                 }
                 thread.start()
 
-                val fragment = NewReleasesFragment.createNewReleases()
+                fragment = NewReleasesFragment.createNewReleases()
 
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, fragment)
-                    .commit()
+                message = "Database Wiped"
             }
-            else -> Toast.makeText(this, "Invalid Menu Selection", Toast.LENGTH_LONG).show()
+            else -> message = "Invalid Menu Selection"
         }
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.container, fragment)
+            .commit()
+
+        Toast.makeText(this, "$message", Toast.LENGTH_LONG).show()
+
         return true
     }
 
@@ -84,13 +91,8 @@ class MainActivity : AppCompatActivity() {
             var db = MMCCDB.createInstance(this)
 
             db.collectionDao().saveToCollection(collectionEntity)
-
-            for (entity in db.collectionDao().getCollection()) {
-                Log.i(TAG, "addToCollection: Title: ${entity.title}")
-            }
         }
         thread.start()
-        Toast.makeText(this, "Add To Collection: ${data.title.split(" (")[0]}", Toast.LENGTH_LONG).show()
     }
 
     fun addToWishlist(data: Results) {
@@ -104,12 +106,7 @@ class MainActivity : AppCompatActivity() {
             var db = MMCCDB.createInstance(this)
 
             db.wishlistDao().saveToWishlist(wishlistEntity)
-
-            for (entity in db.wishlistDao().getWishlist()) {
-                Log.i(TAG, "addToWishlist: Title: ${entity.title}")
-            }
-        }
+       }
         thread.start()
-        Toast.makeText(this, "Add To Wishlist: ${data.title.split(" (")[0]}", Toast.LENGTH_LONG).show()
     }
 }

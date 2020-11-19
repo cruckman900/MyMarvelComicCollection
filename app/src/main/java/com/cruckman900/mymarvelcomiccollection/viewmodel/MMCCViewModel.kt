@@ -54,6 +54,10 @@ class MMCCViewModel(val repo: MMCCRepository) : ViewModel() {
         repo.repoGetCollection(::callbackData, context)
     }
 
+    fun getWishlist(context: Context) {
+        repo.repoGetWishlist(::callbackData, context)
+    }
+
     fun callbackData(data: AppState) {
         Log.d(TAG, "callbackData: $data")
         mmccMutableLiveData.postValue(data)
